@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace MovieLibrary
 {
@@ -6,16 +7,15 @@ namespace MovieLibrary
     {
         public static void Main(String[] args)
         {
-            //Display.printMovies(FileHandler.loadFile("src/app/movies.ini"));
-
             String[] menuPoints = { "Exit program", "Show Movies", "Show Dicks" };
             String[] optionInput = { "" };
+            Dictionary<String, Dictionary<String, String>> movies = FileHandler.LoadFromINI("movies.ini");
 
             while (true)
             {
                 //Console.Clear();
-                Display.printMenu("[-Main Menu-]", menuPoints);
-                int options = Display.getInputs("Choose an option", optionInput);
+                Display.PrintMenu("[-Main Menu-]", menuPoints);
+                int options = Display.GetInputs("Choose an option", optionInput);
                 switch (options)
                 {
                     case 0:
@@ -25,32 +25,35 @@ namespace MovieLibrary
                         break;
                     case 1:
                         {
-                            showMovies();
+                            ShowMovies(movies);
                         }
                         break;
                     case 2:
                         {
-                            showDicks();
+                            ShowDicks();
                         }
                         break;
                     default:
                         {
                             throw new Exception("Not an option!");
-                            Display.print("Not an option!");
+                            Display.Print("Not an option!");
                         }
                         break;
                 }
             }
         }
 
-        public static void showMovies()
+        public static void ShowMovies(Dictionary<String, Dictionary<String, String>> movies)
         {
-            Display.printMovies(FileHandler.loadFromINI("movies.ini"));
+            Display.PrintMovies(movies);
         }
-
-        public static void showDicks()
+        public static void asd()
         {
-            String s = "sajt=béla";
+
+        }
+        public static void ShowDicks()
+        {
+            String s = "8=Đ";
             System.Console.WriteLine(s.Split("=")[0] + s.Split("=")[1]);
         }
     }

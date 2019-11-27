@@ -5,22 +5,22 @@ namespace MovieLibrary
 {
     class Display
     {
-        public static void print(String text)
+        public static void Print(String text)
         {
             System.Console.WriteLine(text); ;
         }
 
-        public static void printMenu(String title, String[] points)
+        public static void PrintMenu(String title, String[] points)
         {
-            print(title);
+            Print(title);
             for (int i = 0; i < points.Length; i++)
             {
                 Console.Write("{0}. {1}\n", i, points[i]);
             }
-            print("");
+            Print("");
         }
 
-        public static void printMovies(Dictionary<String, Dictionary<String, String>> movies)
+        public static void PrintMovies(Dictionary<String, Dictionary<String, String>> movies)
         {
             foreach (var section in movies)
             {
@@ -33,15 +33,15 @@ namespace MovieLibrary
 
         }
 
-        public static int getInputs(String description, String[] inputs)
+        public static int GetInputs(String description, String[] inputs)
         {
             byte choice = 0;
 
-            print(description);
+            Print(description);
 
             for (int i = 0; i < inputs.Length; i++)
             {
-                print(inputs[i]);
+                Print(inputs[i]);
                 choice = Convert.ToByte(Console.ReadLine());
             }
             return choice;

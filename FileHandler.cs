@@ -10,7 +10,7 @@ namespace MovieLibrary
         /// Gives back a Dictionary&lt;String, Dictionary&lt;String, String&gt;&gt;.
         /// </summary>
         /// <param name="fileName"></param>
-        public static Dictionary<String, Dictionary<String, String>> loadFromINI(String fileName)
+        public static Dictionary<String, Dictionary<String, String>> LoadFromINI(String fileName)
         {
             try
             {
