@@ -1,10 +1,10 @@
 using System;
+using System.Collections.Generic;
 
 namespace MovieLibrary
 {
-    public class Display
+    class Display
     {
-
         public static void print(String text)
         {
             System.Console.WriteLine(text); ;
@@ -20,14 +20,18 @@ namespace MovieLibrary
             print("");
         }
 
-        /* public static void printMovies(HashMap<String, HashMap<String, String>> movies)
+        public static void printMovies(Dictionary<String, Dictionary<String, String>> movies)
         {
-            
-             * for (String section : movies.keySet()) { print("" + section); for (String key
-             * : movies.get(section).keySet()) { print(key + ": " +
-             * movies.get(section).get(key)); } }
-            
-        } */
+            foreach (var section in movies)
+            {
+                System.Console.WriteLine("Movie Title: {0}", section.Key);
+                foreach (var property in section.Value)
+                {
+                    System.Console.WriteLine("{0}: {1}", property.Key, property.Value);
+                }
+            }
+
+        }
 
         public static int getInputs(String description, String[] inputs)
         {

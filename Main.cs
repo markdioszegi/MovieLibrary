@@ -14,7 +14,7 @@ namespace MovieLibrary
             while (true)
             {
                 //Console.Clear();
-                Display.printMenu("Main Menu", menuPoints);
+                Display.printMenu("[-Main Menu-]", menuPoints);
                 int options = Display.getInputs("Choose an option", optionInput);
                 switch (options)
                 {
@@ -35,6 +35,7 @@ namespace MovieLibrary
                         break;
                     default:
                         {
+                            throw new Exception("Not an option!");
                             Display.print("Not an option!");
                         }
                         break;
@@ -44,15 +45,13 @@ namespace MovieLibrary
 
         public static void showMovies()
         {
-            FileHandler.loadFile("movies.ini");
+            Display.printMovies(FileHandler.loadFromINI("movies.ini"));
         }
 
         public static void showDicks()
         {
-            for (int i = 0; i < 6; i++)
-            {
-                Display.print("8===Đ");
-            }
+            String s = "sajt=béla";
+            System.Console.WriteLine(s.Split("=")[0] + s.Split("=")[1]);
         }
     }
 }
