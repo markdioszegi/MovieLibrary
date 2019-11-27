@@ -32,19 +32,29 @@ namespace MovieLibrary
             }
 
         }
-
-        public static int GetInputs(String description, String[] inputs)
+        public static void PrintMovies(Movie[] movies)
         {
-            byte choice = 0;
+            foreach (Movie movie in movies)
+            {
+                foreach (var property in movie.GetType().GetProperties())
+                {
+                    Print(String.Format("{0}: {1}", property.Name, property.GetValue(movie, null)));    //TODO
+                }
+            }
+        }
+
+        public static String[] GetInputs(String description, String[] inputs)
+        {
+            String[] choices = new String[inputs.Length];
 
             Print(description);
 
             for (int i = 0; i < inputs.Length; i++)
             {
                 Print(inputs[i]);
-                choice = Convert.ToByte(Console.ReadLine());
+                choices[i] = Console.ReadLine();
             }
-            return choice;
+            return choices;
         }
 
     }
