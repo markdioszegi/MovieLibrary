@@ -21,7 +21,7 @@ namespace MovieLibrary
             //HandleMenu(movies);
         }
 
-        public static void HandleMenu(Movie[] movies)
+        /*public static void HandleMenu(Movie[] movies)
         {
             String[] menuPoints = { "Exit program", "Show Movies", "Show Director and genre of a movie" };
             String[] optionInput = { "" };
@@ -70,6 +70,7 @@ namespace MovieLibrary
                 }
             }
         }
+        */
         public static void ShowMovies(Dictionary<String, Dictionary<String, String>> movies)
         {
             Display.PrintMovies(movies);
