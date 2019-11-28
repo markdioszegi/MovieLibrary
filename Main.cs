@@ -7,30 +7,30 @@ namespace MovieLibrary
     {
         public static void Main(String[] args)
         {
-            Movie[] movies;
+            List<Movie> movies;
             Ini ini = new Ini("movies.ini");
             movies = Movie.LoadMoviesFromIni(ini);
 
-            System.Console.WriteLine("Sections: {0}, Properties: {1}", ini.SectionsLength, ini.PropertiesLength);
-            Display.Print(ini.ToString());
+            //System.Console.WriteLine("Sections: {0}, Properties: {1}", ini.SectionsLength, ini.PropertiesLength);
+            //Display.Print(ini.ToString());
 
             //Display.PrintMovies(ini.Sections);    //Old print
-            Display.PrintMovies(movies);
+            //Display.PrintMovies(movies);
 
             //Dictionary<String, Dictionary<String, String>> movies = FileHandler.LoadFromINI("movies.ini");
-            //HandleMenu(movies);
+            HandleMenu(movies);
         }
 
-        /*public static void HandleMenu(Movie[] movies)
+        public static void HandleMenu(List<Movie> movies)
         {
-            String[] menuPoints = { "Exit program", "Show Movies", "Show Director and genre of a movie" };
-            String[] optionInput = { "" };
+            String[] menuPoints = { "Exit program", "Show Movies", "Show director and genre of a movie", "Get movies by genre", "Show movie trailer" };
+            String[] optionInput = { "Choose an option: " };
 
             while (true)
             {
                 //Console.Clear();
                 Display.PrintMenu("[-Main Menu-]", menuPoints);
-                byte option = Convert.ToByte(Display.GetInputs("Choose an option", optionInput)[0]);
+                byte option = Convert.ToByte(Display.GetInputs(null, optionInput)[0]);
                 switch (option)
                 {
                     case 0:
@@ -46,13 +46,42 @@ namespace MovieLibrary
                     case 2:
                         {
                             String movieTitle = Display.GetInputs("Fill the blank(s)", new String[] { "Movie Title: " })[0];
-                            Display.Print(GetDirectorAndGenre(movies, movieTitle));
+                            if (GetDirectorAndGenre(movies, movieTitle) != null)
+                            {
+                                Display.Print(GetDirectorAndGenre(movies, movieTitle));
+                            }
+                            else
+                            {
+                                Display.Print("Couldn't find any movies with that title!");
+                            }
                         }
                         break;
                     case 3:
                         {
                             String genre = Display.GetInputs("Fill the blank(s)", new String[] { "Genre: " })[0];
-                            GetMoviesByGenre(movies, genre);
+                            if (GetMoviesByGenre(movies, genre).Count > 0)
+                            {
+                                Display.PrintMovies(GetMoviesByGenre(movies, genre));
+                            }
+                            else
+                            {
+                                Display.Print("Couldn't find any movies with that genre!");
+                            }
+                        }
+                        break;
+                    case 4:
+                        {
+                            String movieTitle = Display.GetInputs("Fill the blank(s)", new String[] { "Movie Title: " })[0];
+                            string url = "http://www.google.com/search?q=" + movieTitle;
+                            try
+                            {
+                                System.Diagnostics.Process.Start(url);
+                                System.Console.WriteLine("Opening...");
+                            }
+                            catch (Exception e)
+                            {
+                                System.Console.WriteLine(e.Message); ;
+                            }
                         }
                         break;
                     default:
@@ -70,38 +99,40 @@ namespace MovieLibrary
                 }
             }
         }
-        */
-        public static void ShowMovies(Dictionary<String, Dictionary<String, String>> movies)
+        public static void ShowMovies(List<Movie> movies)
         {
             Display.PrintMovies(movies);
         }
 
-        public static String GetDirectorAndGenre(Dictionary<String, Dictionary<String, String>> movies, String movieTitle)
+        public static String GetDirectorAndGenre(List<Movie> movies, String movieTitle)
         {
             String[] result = new String[2];
+            bool found = false;
             foreach (var movie in movies)
             {
-                if (movie.Key == movieTitle)
+                if (movie.Title.ToLower() == movieTitle.ToLower())
                 {
-                    foreach (var property in movie.Value)
-                    {
-                        if (property.Key == "director")
-                        {
-                            result[0] += property.Value;
-                        }
-                        else if (property.Key == "genre")
-                        {
-                            result[1] += property.Value;
-                        }
-                    }
+                    result[0] = movie.Director;
+                    result[1] = movie.Genre;
+                    found = true;
                 }
             }
-            return "Director: " + result[0] + "\nGenre: " + result[1];
+            if (found) return "Director: " + result[0] + "\nGenre: " + result[1];
+            return null;
         }
 
-        public static void GetMoviesByGenre(Dictionary<String, Dictionary<String, String>> movies, String genre)
+        public static List<Movie> GetMoviesByGenre(List<Movie> movies, String genre)
         {
-            //TODO
+            //genre = genre.Replace(" ", String.Empty);
+            List<Movie> moviesByGenre = new List<Movie>();
+            foreach (var movie in movies)
+            {
+                if (movie.Genre.ToLower().Contains(genre.ToLower()))
+                {
+                    moviesByGenre.Add(movie);
+                }
+            }
+            return moviesByGenre;
         }
     }
 }

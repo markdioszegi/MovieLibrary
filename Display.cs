@@ -7,7 +7,7 @@ namespace MovieLibrary
     {
         public static void Print(String text)
         {
-            System.Console.WriteLine(text); ;
+            System.Console.WriteLine(text);
         }
 
         public static void PrintMenu(String title, String[] points)
@@ -32,13 +32,20 @@ namespace MovieLibrary
             }
 
         }
-        public static void PrintMovies(Movie[] movies)
+        public static void PrintMovies(List<Movie> movies)
         {
             foreach (Movie movie in movies)
             {
                 foreach (var property in movie.GetType().GetProperties())
                 {
-                    Print(String.Format("{0}: {1}", property.Name, property.GetValue(movie, null)));    //TODO
+                    if (property.Name == "Title")
+                    {
+                        Print(String.Format("[{0}]", property.GetValue(movie, null)));    //TODO
+                    }
+                    else
+                    {
+                        Print(String.Format("{0}: {1}", property.Name, property.GetValue(movie, null)));    //TODO
+                    }
                 }
             }
         }
@@ -51,7 +58,7 @@ namespace MovieLibrary
 
             for (int i = 0; i < inputs.Length; i++)
             {
-                Print(inputs[i]);
+                System.Console.Write(inputs[i]);
                 choices[i] = Console.ReadLine();
             }
             return choices;

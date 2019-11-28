@@ -15,9 +15,15 @@ public class Ini
         Sections = Load(file);
     }
     /// <summary>
-    /// Gives back a Dictionary&lt;String, Dictionary&lt;String, String&gt;&gt;.
+    /// Load from a proper .INI file. A proper .INI file consists of sections and its properties.
+    /// <code>
+    /// [Section]
+    /// property1=something1
+    /// property2=something2
+    /// </code>
     /// </summary>
-    /// <param name="file"></param>
+    /// <param name=""></param>
+    /// <returns>A dictionary with the key (as section) and a dictionary (key=value) with its properties (as value)</returns>
     public Dictionary<String, Dictionary<String, String>> Load(String file)
     {
         try
@@ -26,7 +32,6 @@ public class Ini
             Dictionary<String, String> innerMap = new Dictionary<String, String>();
 
             String line = sr.ReadLine();
-
             while (line != null)
             {
                 if (line.IndexOf("[") == 0 && line.IndexOf("]") == line.Length - 1)   //Sections!

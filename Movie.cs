@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace MovieLibrary
 {
@@ -31,10 +32,10 @@ namespace MovieLibrary
             return movie.GetType().GetProperties();
         } */
 
-        public static Movie[] LoadMoviesFromIni(Ini ini)
+        public static List<Movie> LoadMoviesFromIni(Ini ini)
         {
             int index = 0;
-            Movie[] movies = new Movie[ini.SectionsLength];
+            List<Movie> movies = new List<Movie>();
             foreach (var section in ini.Sections)
             {
                 Movie movie = new Movie(section.Key);
@@ -65,7 +66,7 @@ namespace MovieLibrary
                         movie.Points = float.Parse(property.Value.Replace(".", ","));
                     }
                 }
-                movies[index] = movie;
+                movies.Add(movie);
                 index++;
             }
             return movies;
