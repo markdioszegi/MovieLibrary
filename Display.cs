@@ -20,6 +20,7 @@ namespace MovieLibrary
             Print("");
         }
 
+        [Obsolete("Use the List type one.")]
         public static void PrintMovies(Dictionary<String, Dictionary<String, String>> movies)
         {
             foreach (var section in movies)
@@ -47,6 +48,43 @@ namespace MovieLibrary
                         Print(String.Format("{0}: {1}", property.Name, property.GetValue(movie, null)));    //TODO
                     }
                 }
+                Print(null);
+            }
+        }
+
+        public static void PrintPretty(List<Movie> movies)
+        {
+            int offsetMax = 1;
+
+            foreach (Movie movie in movies)     //Offset finding
+            {
+                foreach (var property in movie.GetType().GetProperties())
+                {
+                    if (property.GetValue(movie, null).ToString().Length > offsetMax)
+                    {
+                        offsetMax = property.GetValue(movie, null).ToString().Length;
+                    }
+                }
+            }
+            string offsetStr = new string(' ', offsetMax);
+
+            //System.Console.WriteLine("Offset!!: " + offset);
+
+            foreach (var property in movies[0].GetType().GetProperties())
+            {
+                System.Console.Write(property.Name + offsetStr);
+            }
+
+            //print("\n" + "-" * offset * len(titles))
+            System.Console.WriteLine("\n-----------------------");    //Dashes
+
+            foreach (Movie movie in movies)     //Data
+            {
+                foreach (var property in movie.GetType().GetProperties())
+                {
+                    System.Console.Write(property.GetValue(movie, null) + offsetStr);
+                }
+                Print(null);
             }
         }
 

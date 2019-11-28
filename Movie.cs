@@ -32,6 +32,24 @@ namespace MovieLibrary
             return movie.GetType().GetProperties();
         } */
 
+        public override string ToString()
+        {
+            string s = null;    //meaningful
+            foreach (var property in this.GetType().GetProperties())
+            {
+                if (property.Name == "Title")
+                {
+                    s += String.Format("[{0}]", property.GetValue(this, null));
+                }
+                else
+                {
+                    s += property.Name + ": " + property.GetValue(this, null);
+                }
+                s += "\n";
+            }
+            return s;
+        }
+
         public static List<Movie> LoadMoviesFromIni(Ini ini)
         {
             int index = 0;

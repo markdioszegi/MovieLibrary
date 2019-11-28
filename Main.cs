@@ -5,7 +5,7 @@ namespace MovieLibrary
 {
     class Program
     {
-        public static void Main(String[] args)
+        private static void Main(String[] args)
         {
             List<Movie> movies;
             Ini ini = new Ini("movies.ini");
@@ -18,12 +18,13 @@ namespace MovieLibrary
             //Display.PrintMovies(movies);
 
             //Dictionary<String, Dictionary<String, String>> movies = FileHandler.LoadFromINI("movies.ini");
+
             HandleMenu(movies);
         }
 
-        public static void HandleMenu(List<Movie> movies)
+        private static void HandleMenu(List<Movie> movies)
         {
-            String[] menuPoints = { "Exit program", "Show Movies", "Show director and genre of a movie", "Get movies by genre", "Show movie trailer" };
+            String[] menuPoints = { "Exit program", "Show Movies", "Show director and genre of a movie", "Get movies by genre", "Show movie trailer", "Get the highest rated movie" };
             String[] optionInput = { "Choose an option: " };
 
             while (true)
@@ -84,6 +85,11 @@ namespace MovieLibrary
                             }
                         }
                         break;
+                    case 5:
+                        {
+                            Display.Print(GetHighestRatedMovie(movies).ToString());
+                        }
+                        break;
                     default:
                         {
                             try
@@ -99,12 +105,14 @@ namespace MovieLibrary
                 }
             }
         }
-        public static void ShowMovies(List<Movie> movies)
+
+        private static void ShowMovies(List<Movie> movies)
         {
             Display.PrintMovies(movies);
+            //Display.PrintPretty(movies);
         }
 
-        public static String GetDirectorAndGenre(List<Movie> movies, String movieTitle)
+        private static String GetDirectorAndGenre(List<Movie> movies, String movieTitle)
         {
             String[] result = new String[2];
             bool found = false;
@@ -121,7 +129,7 @@ namespace MovieLibrary
             return null;
         }
 
-        public static List<Movie> GetMoviesByGenre(List<Movie> movies, String genre)
+        private static List<Movie> GetMoviesByGenre(List<Movie> movies, String genre)
         {
             //genre = genre.Replace(" ", String.Empty);
             List<Movie> moviesByGenre = new List<Movie>();
@@ -133,6 +141,18 @@ namespace MovieLibrary
                 }
             }
             return moviesByGenre;
+        }
+        private static Movie GetHighestRatedMovie(List<Movie> movies)
+        {
+            Movie highest = movies[0];
+            foreach (var movie in movies)
+            {
+                if (movie.Points > highest.Points)
+                {
+                    highest = movie;
+                }
+            }
+            return highest;
         }
     }
 }
